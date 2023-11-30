@@ -20,8 +20,9 @@
 // const saque = new Balance(5000)
 // saque.withdraw(1500);
 
-class Account {
+abstract class Account {
   name: string
+  saldo: number = 0
   accountNumber: number
 
   constructor(name: string, accountNumber: number) {
@@ -29,30 +30,37 @@ class Account {
     this.accountNumber = accountNumber
   }
 
-  deposit = () => {
-    console.log('Voce depositou')
+  deposit = (quantity: number) => {
+    this.saldo += quantity
+    console.log(`Você depositou: ${quantity} reais`)
   }
 
-  withdraw = () => {
-    console.log('Voce sacou')
+  withdraw = (quantity: number) => {
+    if (quantity > this.saldo) {
+      return console.log('Saldo Insuficiente');
+    } else {
+      this.saldo -= quantity;
+      return console.log(`Dinheiro sacado: ${quantity} reais`);
+    }
   }
+
+  getBalance = () => {
+    console.log(`Seu saldo é de: ${this.saldo} reais`)
+  }
+
 }
 
-class Admin extends Account {
-  saldo: number
+class PeopleAccount extends Account {
+  doc_id: number
 
-  constructor(name: string, accountNumber: number) {
+  constructor(doc_id: number, name: string, accountNumber: number) {
     super(name, accountNumber)
-    this.saldo = 20
-  }
-
-  getValue = () => {
-    console.log(this.saldo)
+    this.doc_id = doc_id
   }
 }
 
-const adminAccount = new Admin('Thiago', 125)
-console.log(adminAccount)
-
-const account: Account = new Account('Thiago', 1258)
+const account: PeopleAccount = new PeopleAccount(1, 'Thiago', 125)
 console.log(account)
+account.deposit(5000)
+account.withdraw(2500)
+account.getBalance()
