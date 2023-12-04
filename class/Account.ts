@@ -1,11 +1,20 @@
 export abstract class Account {
-  name: string
+  private name: string
   saldo: number = 0
   accountNumber: number
 
   constructor(name: string, accountNumber: number) {
     this.name = name
     this.accountNumber = accountNumber
+  }
+
+  setName = (name: string): void => {
+    this.name = name;
+    console.log('Voce alterou o nome')
+  }
+
+  getName = (): string => {
+    return this.name;
   }
 
   deposit = (quantity: number) => {
